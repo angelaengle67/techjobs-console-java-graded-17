@@ -35,7 +35,7 @@ public class JobData {
         ArrayList<String> values = new ArrayList<>();
 
         for (HashMap<String, String> row : allJobs) {
-            String aValue = row.get(field);
+            String aValue = row.get(field).toLowerCase();
 
             if (!values.contains(aValue)) {
                 values.add(aValue);
@@ -73,7 +73,7 @@ public class JobData {
 
         for (HashMap<String, String> row : allJobs) {
 
-            String aValue = row.get(column);
+            String aValue = row.get(column).toLowerCase();
 
             if (aValue.contains(value)) {
                 jobs.add(row);
@@ -94,9 +94,21 @@ public class JobData {
         // load data, if not already loaded
         loadData();
 
-        // TODO - implement this method
-        return null;
-    }
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+//each row is a hashmap // for each job, loop through columns(keys) for that job,
+// if any attributes of the job matches search term(values)
+        for (HashMap<String, String> job : allJobs) {
+            for (String key : job.keySet()) {
+                String aValue = job.get(key).toLowerCase();
+
+                if (aValue.contains(value)) {
+                    jobs.add(job);
+                }
+            }
+        }
+            return jobs;
+        }
+
 
     /**
      * Read in data from a CSV file and store it in a list
